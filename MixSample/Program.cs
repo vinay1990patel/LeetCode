@@ -9,7 +9,7 @@ builder.Services.AddControllers();    //  used for web api
 builder.Services.AddMvc();            // used  for MVC 
 builder.Services.AddTransient<CustomeMiddleWare>();
 builder.Services.AddSwaggerGen();
-
+// just for github
 var app = builder.Build();
 
 //if (app.Environment.IsDevelopment())
