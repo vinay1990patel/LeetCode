@@ -10,19 +10,30 @@ namespace LeetCode.CSharp
     internal class RefAndOut
     {
 
-        // Out => use as out put paramenter inililozation is must before coltrol leave the method . It is not compulsory to initialize a parameter or argument before it is passed to an out.
+        // by using ref and out you can pass value by reference.
+        // Ref is use as input and output parameter, out can be use as out put parameter , both can be use to return multiple value.
 
-        public static void Sum(in int a, in int b, out int x)
+
+        public static void Main()
         {
-           x= a + b;
+            int a = 10; // REF => The parameter or argument must be initialized first before it is passed to ref.
+            int b;      // OUT => No need to initialize parameter before passing it
+
+
+            RefAndOut.Sum(ref a, out b);
+        }
+
+        public static void Sum(ref int a, out int b)
+        {
+            b = 10;  // OUT => parameter must be initialized before leaveing the controll leave the method
+                     // REF => initialized not neccessory before control leave the method
         }
 
 
-        // Ref is use as input and output parameter , The parameter or argument must be initialized first before it is passed to ref.
-        public static void increment(ref int i)
-        {
-            i++;
-        }
+
+
+      
+
 
 
         // They behave same at complie time but diferent at run time. so ref and out can not be overloaded. in same function

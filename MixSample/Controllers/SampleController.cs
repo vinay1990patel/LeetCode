@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MixSample.Controllers
 {
-   
+
     [ApiController]
+    [Route("api/[controller]")]
     public class SampleController : ControllerBase
     {
 
@@ -17,15 +18,15 @@ namespace MixSample.Controllers
 
         [Route("get-data")]
         [HttpGet]
-        public string  GetData()
+        public string GetData()
         {
             return "response form sencod GetData Resource";
         }
 
 
         [Route("books/getDataById/{id:int:min(10)}")]
-        [HttpGet]
-       public string GetDataById(int id)
+        [HttpGet("id")]
+       public string GetDataById([FromRoute] int id)
         {
             return id.ToString();
         }

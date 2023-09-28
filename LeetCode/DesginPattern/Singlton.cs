@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LeetCode.DesginPattern
 {
-    internal class Singlton
+    internal sealed   class Singlton
     {
         private static Singlton Instance = null;
 

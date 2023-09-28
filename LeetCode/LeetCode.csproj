@@ -2,19 +2,26 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DesginPattern\FactoryDes\" />
-    <Folder Include="DesginPattern\AbstractFactory\" />
+    <Compile Remove="DesginPattern\FactoryDes\**" />
+    <EmbeddedResource Remove="DesginPattern\FactoryDes\**" />
+    <None Remove="DesginPattern\FactoryDes\**" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
     <PackageReference Include="Unity" Version="5.11.10" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>LeetCodeTest</_Parameter1>
+    </AssemblyAttribute>
+</ItemGroup>
 
 </Project>

@@ -14,7 +14,7 @@ namespace LeetCode.SOLID
         public void SendMail()
         {
 
-            //  should have only one responsibilty to do. or noly reason to changes
+            //  should have only one responsibilty to do. or only reason to changes
         }
 
 

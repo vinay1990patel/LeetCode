@@ -7,5 +7,6 @@
         IEnumerable<TEntity> GetAll();
         IEnumerable<TEntity> GetById(int id);
         void Delete(TEntity entity);
+        //void SaveChanges();
     }
 }

@@ -6,17 +6,27 @@ using MixSample.Model;
 
 namespace MixSample.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class BooksController : ControllerBase
     {
-        private UnitOfWork _unitOfWork = new UnitOfWork();
+        private IUnitOfWork _unitOfWork;
         
-        
-        // GET: api/<BooksController>
+
+        public BooksController (IUnitOfWork unitOfWork)
+        {
+               _unitOfWork= unitOfWork;
+        }
+
+
+
+
+     
         [HttpGet]
         public IEnumerable<Book> Get()
         {
+          
+            
             return _unitOfWork.bookGenericRepository.GetAll();
         }
 
@@ -24,10 +34,12 @@ namespace MixSample.Controllers
         [HttpGet("{id}")]
         public IEnumerable<Book> Get(int id)
         {
-           return _unitOfWork.bookGenericRepository.GetById(id);
+             return _unitOfWork.bookGenericRepository.GetById(id);
         }
 
         // POST api/<BooksController>
+
+        [Route("Create-books")]
         [HttpPost]
         public void Post([FromBody] Book book)
         {

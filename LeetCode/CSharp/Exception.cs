@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Runtime.Serialization;
+using System.Linq.Expressions;
 
 namespace LeetCode.CSharp
 {
@@ -40,6 +41,61 @@ namespace LeetCode.CSharp
            throw new ExplicitException();
            throw new ExplicitException("");
             //throw new ExplicitException("", Exception ? exception);
+        }
+
+
+
+        public void Method1Exception()
+        {
+            try
+            {
+
+            }
+           
+
+          
+
+            catch(NullReferenceException ex) 
+            {
+                try
+                {
+
+                }
+
+                catch
+                {
+
+                }
+
+               
+
+                finally
+                {
+
+                }
+            }
+
+            catch(Exception ex)
+            {
+                try
+                {
+
+                }
+
+                catch
+                {
+
+                }
+                finally
+                {
+
+                }
+            }
+
+            finally
+            {
+               
+            }
         }
 
     }

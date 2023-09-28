@@ -6,7 +6,16 @@ namespace MixSample.DbContextLayer
     public class UnitOfWork : IUnitOfWork
     {
 
-        private MixedDbContext _mixedDbContext = new MixedDbContext();
+
+
+
+        private MixedDbContext _mixedDbContext;
+
+        
+        public UnitOfWork(MixedDbContext mixedDbContext) { 
+        
+           this._mixedDbContext = mixedDbContext;
+        }
 
         public IGenericRepository<Book> _bookGenericRepository;
         public IGenericRepository<Employee> _employeeGenericRepository;

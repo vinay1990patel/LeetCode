@@ -11,66 +11,65 @@ namespace LeetCode.SOLID
         /* the object of a derived class should be able to replace an object of the base class without bringing any errors in the system or modifying the behavior of the base class. 
          * That means child class objects should be able to replace parent class objects without compromising application integrity. */
 
-        public virtual void StartEngine()
+        static void Main(string[] args)
         {
+            Apple apple = new Orange();    // orange class object(child) is not replaced with apple class(base) object which is breaking lsp
+            Console.WriteLine(apple.GetColor());  // instead of orrange color we are getting apple color
+
+
+            // LSP
+
+            IFruit fruit = new Orange1();
+            Console.WriteLine( $"Color of orrange : {fruit.GetColor}");
+
+            fruit = new Apple1();
+
+            Console.WriteLine($"Color of orrange : {fruit.GetColor}");
 
         }
+
+    }
+
     
-    }
-
-
-    class car : LiskovSubstituion
+}
+public class Apple
+{
+    public virtual string GetColor()
     {
-        public override void StartEngine()
-        {
-
-        }
+        return "Red";
     }
-
-    class ByCicle : LiskovSubstituion
+}
+public class Orange : Apple
+{
+    public override string GetColor()
     {
-        /* byCycle dont have engine so it can start hence child class object is not subtituble with parent class object */
-       
-       
-        public override void StartEngine()
-        {
-
-        }
-    }
-
-
-
-    public class VehicleWithEngine
-    {
-        public virtual void StartEngine()
-        {
-
-        }
-    }
-
-    public class VehicleWithoudEngine
-    {
-        public virtual void StartEngine()
-        {
-
-        }
-    }
-
-
-    class car1 : VehicleWithEngine
-    {
-        public override void StartEngine()
-        {
-
-        }
-    }
-
-    class ByCycle : VehicleWithoudEngine
-    {
-        public override void StartEngine()
-        {
-            base.StartEngine();
-        }
+        return "Orange";
     }
 
 }
+
+// With LSP
+interface IFruit
+{
+    public string GetColor();
+}
+
+public class Apple1 : IFruit
+{
+    public string GetColor()
+    {
+        return "Red";
+    }
+}
+
+public class Orange1 :IFruit
+{
+    public string GetColor()
+    {
+        return "Orrange";
+
+    }
+}
+
+
+

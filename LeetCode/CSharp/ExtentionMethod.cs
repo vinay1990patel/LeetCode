@@ -9,9 +9,35 @@ namespace LeetCode.CSharp
     
 
 
+    public class NewClass
+    {
+        public void Test()
+        {
+            Console.WriteLine("Test One");
+
+        }
+    }
+
+   
+
     public static class extImplementaion
     {
+       
+        public static void main()
+        {
+            string s = "vinay patel";
+            s.firstChar();
 
+
+            // 
+
+             NewClass newClass = new NewClass();
+             newClass.Test();
+             newClass.extMethod(5);
+        }
+        
+        
+        // This keyword is used for bind the method "firstChar" this string class
         public static string firstChar(this string str)
         {
 
@@ -22,6 +48,12 @@ namespace LeetCode.CSharp
             }
 
             return str;
+        }
+
+
+        public static void extMethod(this NewClass newClass, int x)
+        {
+            Console.WriteLine("extented method with new parameter" +x);
         }
 
     }

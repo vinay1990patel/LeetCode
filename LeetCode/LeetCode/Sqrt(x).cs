@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace LeetCode.LeetCode
 {
-    internal class Sqrt_x_
+    public class Sqrt_x_
     {
 
-        public static int  SqureRoot (int x)
+        private  int  SqureRoot (int x)
         {
 
             Int64 start = 0;

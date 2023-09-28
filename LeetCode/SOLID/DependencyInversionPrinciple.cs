@@ -14,9 +14,9 @@ namespace LeetCode.SOLID
         private Desktop desktop;
         private QwertyKeyPad QwertyKeyPad;
 
-        public DependencyInversionPrinciple()
+        public DependencyInversionPrinciple()    
         {
-            this.desktop = new Desktop();
+            this.desktop = new Desktop();   //DependencyInversionPrinciple class depenednt on lower level class 
             this.QwertyKeyPad = new QwertyKeyPad();  // both are tightly coupled in every initilaization of DependencyInversionPrinciple Desktop and QwertyKeyPad will be call or bind
         }
 
@@ -41,4 +41,44 @@ namespace LeetCode.SOLID
     {
 
     }
+
+
+   // Example 2 
+
+
+    public class DataAccessLayer
+    {
+        IFlieLogger _logger;
+        public DataAccessLayer( IFlieLogger flieLogger)  //5.  it will be loosly cuopled now
+        {
+            _logger = flieLogger;
+        }
+
+
+        public void AddCustomer()       
+        {
+          FileLoggerClass fileLoggerClass = new FileLoggerClass();   //1. Here Data AccessLayer (high level class is depened on low level class (FileLogerclass))
+                                                                     //2. to resolve this create inteface and put logMethod inside it.
+            fileLoggerClass.log();
+
+
+            _logger.log();        // use like this 
+
+        }
+    }
+
+
+   public interface IFlieLogger   // 3.
+    {
+        void log();
+    }
+    class FileLoggerClass : IFlieLogger // 4.
+    {
+        public void log()
+        {
+            Console.WriteLine("loging");
+        }
+    }
+
+
 }

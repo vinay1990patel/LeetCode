@@ -10,7 +10,7 @@ namespace LeetCode.CSharp
     // Design a class or method that can accpet the tpye one or more than one type untill the class or method declred
     // or instantiated by client code.
 
-    class testGenric<T>
+    class testGenric<T> where T : class   // where T is use for constraints on the type here in test Genric can accept only class type as genric 
     {
         public static bool equals(T a, T b)
         {

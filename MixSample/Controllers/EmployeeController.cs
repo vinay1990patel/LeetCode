@@ -1,28 +1,32 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MixSample.Model;
+using MixSample.Repository;
 using MixSample.Repository.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MixSample.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
+
+    [Authorize]
     public class EmployeeController : ControllerBase
     {
 
-        private readonly EmployeeService employeeService;
-        public EmployeeController() { 
-        employeeService = new EmployeeService();
+        private readonly IEmployee _employeeService;
+        public EmployeeController(IEmployee employee) {
+            _employeeService =employee;
         }
         // GET: api/<EmployeeController>
         [HttpGet]
-        public IEnumerable<Employee> Get()
+        public ActionResult < IQueryable<Employee>> Get()
         {
 
-            IEnumerable<Employee> result = employeeService.GetEmployee();
+            IQueryable<Employee> result =  _employeeService.GetEmployee().AsQueryable();
 
-            return (IEnumerable<Employee>)Ok(result);
+            return Ok(result);
         }
 
         // GET api/<EmployeeController>/5
@@ -34,8 +38,15 @@ namespace MixSample.Controllers
 
         // POST api/<EmployeeController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] Employee employee)
         {
+           _employeeService.AddEmplopyee(employee);
+
+         // var employeeLisr =  _employeeService.GetEmployee();
+
+            _employeeService.Save();
+
+            return Ok();
         }
 
         // PUT api/<EmployeeController>/5
@@ -49,5 +60,9 @@ namespace MixSample.Controllers
         public void Delete(int id)
         {
         }
+
+
+      
+
     }
 }

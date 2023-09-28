@@ -1,0 +1,5 @@
+﻿
+
+1. Using => statement  ensure that Dispose() Method of a class object is called even if exception occure. 
+2.  IS is used to check the of an object ( 5 is int = true). AS is used for to convert the object (compatble reference type.) 
+3.  VAR type of variable is check at compile time. Dyanamic at time of run time

@@ -1,4 +1,5 @@
-﻿using MixSample.DbContextLayer;
+﻿using Microsoft.EntityFrameworkCore;
+using MixSample.DbContextLayer;
 using MixSample.Model;
 using System.Collections;
 namespace MixSample.Repository.Services
@@ -6,31 +7,43 @@ namespace MixSample.Repository.Services
     public class EmployeeService : IEmployee
     {
 
-        public readonly Employee employee;
-        public  MixedDbContext contextLayer;
-          public EmployeeService()
+        //public readonly Employee employee;
+        public  MixedDbContext _contextLayer;
+        //List<Employee> employees = new List<Employee>();
+        public EmployeeService( MixedDbContext mixedDbContext)
         {
-            contextLayer = new  MixedDbContext();
-            employee = new Employee();
+            _contextLayer = mixedDbContext;
+           // employee = new Employee();
+            
         }
 
-        public IEnumerable<Employee> GetEmployee()
+
+     
+
+        public IQueryable<Employee> GetEmployee()
         {
-
-            IEnumerable<Employee> result = contextLayer.employees.ToArray();
-
-            return result;
+            IQueryable<Employee> employees =_contextLayer.employees.AsQueryable();
+             return employees;
         }
 
         public Employee GetEmployeeByID(int id)
         {
-            Employee emp = (Employee) contextLayer.employees.Where(x => x.Id == id);
+            Employee emp = (Employee)_contextLayer.employees.Where(x => x.Id == id);
             return emp;
         }
 
         public void Save()
         {
-            contextLayer.SaveChanges();
+          //  _contextLayer.Entry(employee).State = EntityState.Modified;
+
+            _contextLayer.SaveChanges();
+        }
+
+        public void AddEmplopyee(Employee employee)
+        {
+            _contextLayer.employees.Add(employee);
+           //_contextLayer.Entry(employee).State = EntityState.Modified;
+
         }
     }
 }

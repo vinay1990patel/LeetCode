@@ -13,10 +13,12 @@ namespace MixSample.GenericRepository
         {
             this._mixedDbContext = mixedDbContext;
             this.Context = _mixedDbContext.Set<TEntity>();
+         
         }
         public void Add(TEntity entity)
         {
-           Context.Add(entity);
+            Context.Add(entity);
+           
         }
 
         public void Delete(TEntity entity)
@@ -26,7 +28,7 @@ namespace MixSample.GenericRepository
 
         public IEnumerable<TEntity> GetAll()
         {
-         return  Context.ToList<TEntity>();
+         return Context.ToList<TEntity>();
         }
 
         public virtual TEntity GetById(int id)
@@ -34,10 +36,15 @@ namespace MixSample.GenericRepository
           return  Context.Find(id);
         }
 
+        public void SaveChanges()
+        {
+            _mixedDbContext.SaveChanges();
+        }
+
         public void update(TEntity entity)
         {
            Context.Attach(entity);
-            Context.Entry(entity).State = EntityState.Modified;
+           
         }
 
         IEnumerable<TEntity> IGenericRepository<TEntity>.GetById(int id)

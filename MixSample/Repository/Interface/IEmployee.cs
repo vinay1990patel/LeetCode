@@ -4,8 +4,11 @@ namespace MixSample.Repository
 {
     public interface IEmployee 
     {
-      IEnumerable <Employee> GetEmployee(); 
+      IQueryable <Employee> GetEmployee(); 
         Employee GetEmployeeByID(int id);
+
+        void AddEmplopyee(Employee employee); 
+
         void Save();
     }
 }

@@ -14,12 +14,12 @@ namespace MixSample.Controllers
     };
 
         private readonly ILogger<WeatherForecastController> _logger;
-        private readonly WeatherForecastServices _forecasts;
+        private readonly IWeatherForecast _forecasts;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IWeatherForecast weatherForecast)
         {
             _logger = logger;
-            _forecasts = new WeatherForecastServices ();
+            _forecasts = weatherForecast;
         }
 
         //[HttpGet]
@@ -37,6 +37,10 @@ namespace MixSample.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> GetAllData()
         {
+
+            _logger.LogTrace("Loging Weather ForeCast");
+            _logger.LogInformation("Loggin inforamtion");
+
             return _forecasts.GetForecasts();
         }
     }

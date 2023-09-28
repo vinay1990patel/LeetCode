@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LeetCode.SOLID
 {
-    internal class OpenClosePrinciple
+    public class OpenClosePrinciple
     {
         /* software entities such as modules, classes, functions, etc.
          * should be open for extension, but closed for modification. */
@@ -51,7 +51,7 @@ namespace LeetCode.SOLID
     // since we are not allowed for modification so will add new class and impliment calculator interface  
 
 
-    public class DivideClass : IOpenClosePrinciple 
+    public class DivideClass : OpenClosePrinciple, IOpenClosePrinciple
     {
         public int calculator(int a, int b)
         {

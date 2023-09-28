@@ -1,0 +1,185 @@
+﻿
+ 
+ 
+ 
+ --Cluster Index -- Only one per table, fast
+
+ Create Clustered Index Pk_Custom_Clustered_Index
+  on student (gender ASC, Total_Score DESC)
+
+   --Non Cluster Index -- more than one in a table, slower, contain address of data so slow while searching 
+
+  Create NonClustered Index Non_ClsuterIndex_On_Student
+  on student (name asc)
+
+  -- Store Procedure -- 
+  Create procedure SP_Select_prodecude 
+  as
+  begin
+   Select Name, gender from student
+   end
+
+   exec SP_Select_prodecude
+
+
+    --Parameterized Store Procedure -- 
+   Create procedure Sp_Parameterized_Total_Score
+   @TotaScore int
+   as
+   begin
+
+    select * from student where total_score > @TotaScore
+
+   end
+
+   exec Sp_Parameterized_Total_Score 600
+
+   -- alter Store Procedure --
+
+   alter procedure Sp_Parameterized_Total_Score
+   @TotalScore int 
+   as 
+   begin
+     select * from student where total_score >= @TotalScore
+	 end
+	 
+-- Store Procedure with input and out parameter --
+
+create procedure sp_Count_by_Gender
+@gender nvarchar(20),
+@StudentCount int output
+as 
+begin
+
+select @StudentCount= COUNT(*) from student where gender = @gender
+
+end
+
+declare @StudentCount int
+exec sp_Count_by_Gender female, @StudentCount output
+print @StudentCount
+
+--Scaller Function which return one value or Scaller value
+
+CREATE FUNCTION [schema_name.]function_name (parameter_list)
+RETURNS data_type AS
+BEGIN
+    statements
+    RETURN value
+END
+
+--inline table value Function which return table--
+
+create function Inline_GetScores(@Score int)
+returns table 
+as
+ return (
+        select * from student where total_score >= @Score
+  )
+  
+  select * from Inline_GetScores(800)
+
+
+  --multi statement valued function --
+
+  CREATE FUNCTION MultiStatement_TableValued_Function_Name
+(
+        @param1 DataType,
+        @param2 DataType,
+        @paramN DataType 
+)
+RETURNS 
+@OutputTable TABLE
+(
+        @Column1 DataTypeForColumn1 ,
+        @Column2 DataTypeForColumn2
+)
+AS
+BEGIN
+  --FunctionBody
+RETURN
+END
+
+
+
+--Temprary Table get created in tempDb and and automaticllaly got deleled when not in use --
+                  -- Local temprary table --          
+				            -- => Create Table #TableName (id int, name varchar(30), Gender nvarchar(30)) --
+			                -- => local temparry table drop automatilcay once query window or window got close  
+							-- => if temparay table creates inside the store procedure it drops after execution of temparray table
+
+			Create Table #TableName (id int, name varchar(30), Gender nvarchar(30))
+
+			insert into #TableName values (1, 'vinay', 'Male')
+			insert into #TableName values (2, 'vinay1', 'Male')
+			insert into #TableName values (3, 'vinay2', 'Male')
+
+			select * from #TableName
+
+		
+
+-- Global temprary table -- 
+				          --Create table ##GlobalTempTable-- 
+						  --Visible accross the query window or sessions--
+
+		 Create Table ##GloabalTableName (id int, name varchar(30), Gender nvarchar(30))
+
+			insert into ##GloabalTableName values (1, 'vinay', 'Male')
+			insert into ##GloabalTableName values (2, 'vinay1', 'Male')
+			insert into ##GloabalTableName values (3, 'vinay2', 'Male')
+
+--View is a vitual table or saved sql query--
+-- view are helpful to maintain to secuirty if expose only required infromation to user so create the view with limited coloumns of the view--
+-- View dosnt store any data it is a simple select satement 
+-- Its possible to update insert and delete data in view which will be reflect in base table also
+-- You can not pass parameter to a view
+   
+ Create view vw_emplyeeDepartment 
+   as
+
+   select empno,ename,job,mgr,sal from emp
+   join dept
+   on emp.dept = dept.deptno
+  
+  select * from vw_emplyeeDepartment
+
+
+  --Update View ---
+  update vw_emplyeeDepartment
+  set ename = 'jonnesss' where empno = 7566
+
+   --Delete from View ---
+   delete from vw_emplyeeDepartment
+    where empno = 7566
+
+	--CTE common table expression --
+	   --CTE is a temparary result set which can be use for -
+
+	   With CTENAME (Colomns1, Colomns2,...)
+	     as 
+		 (
+		   CTE_Query
+		 )
+	
+	-- Store Procedure V/s Function
+	    -- SP may or may not return a value but function must retrun a value.
+    	-- Sp can have input and out parameter but function can have only input parameter
+		-- we can call a function from sp but we can not call  sp from function.
+		-- SP can not use select, insert ,update delete but function can use like  select * from Inline_GetScores(800)
+		-- we can use try catch in sp but we can not use function
+		--we can use transcation in SP but function we can not use.
+
+
+		-- Highest Salary 
+		 select MAX(salary) where salary <(select MAX salary from employee)
+		
+		-- nth highest salary 
+		  with result as
+		  (
+		    select sal, dense_rank() over (order by sal desc ) as denseRank from emp 
+		  )
+
+		  select top 1 sal from result 
+		  where result.denseRank =3
+
+ 
