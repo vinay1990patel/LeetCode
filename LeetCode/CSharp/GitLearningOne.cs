@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace LeetCode.CSharp
 {
-    internal class GITLearning
+    internal class GitLearningOne
     {
-        // ths thiss
     }
 }
