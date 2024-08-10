@@ -8,6 +8,5 @@ namespace LeetCode.CSharp
 {
     internal class GitLearningOne
     {
-        // correct changes
     }
 }
