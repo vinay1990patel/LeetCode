@@ -17,7 +17,7 @@ Console.WriteLine(result2);
 
 Console.WriteLine("****************************** Nth Salary by Link ****************************************");
 
-LINQ.NthSalary();
+LINQ.NthSalary(3);
 Console.WriteLine("****************************** Normal String Index ****************************************");
 
 LINQ.LinqForStringIndex();

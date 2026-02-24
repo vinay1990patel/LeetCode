@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using MixSample.Repository.Interface;
 using MixSample.Repository.Services;
 
@@ -23,6 +24,7 @@ namespace MixSample.Controllers
         }
 
         //[HttpGet]
+        //[EnableRateLimiting("fixed")]
         //public IEnumerable<WeatherForecast> Get()
         //{
         //    return Enumerable.Range(1, 5).Select(index => new WeatherForecast
@@ -35,6 +37,7 @@ namespace MixSample.Controllers
         //}
 
         [HttpGet]
+        [EnableRateLimiting("fixed")]
         public IEnumerable<WeatherForecast> GetAllData()
         {
 

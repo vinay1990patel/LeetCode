@@ -32,7 +32,7 @@ namespace LeetCode.CSharp
 
             Console.WriteLine(employeeData == employeeData2);
             Console.WriteLine(employeeData.Equals(employeeData2));
-            Console.WriteLine( object.Equals(employeeData,employeeData2));
+            Console.WriteLine( object.Equals(employeeData2, employeeData2));
 
         }
 

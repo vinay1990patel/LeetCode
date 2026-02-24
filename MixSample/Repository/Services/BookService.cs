@@ -5,13 +5,13 @@ using MixSample.Repository.Interface;
 
 namespace MixSample.Repository.Services
 {
-    public class Book : IBook
+    public class BookService : IBook
     {
 
         private MixedDbContext _mixedDbContext;
         private IMapper _mapper;
              
-        public Book(MixedDbContext mixedDbContext, IMapper mapper) {
+        public BookService(MixedDbContext mixedDbContext, IMapper mapper) {
             _mixedDbContext = mixedDbContext;
             _mapper = mapper;
         }

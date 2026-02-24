@@ -7,7 +7,7 @@ using MixSample.Model;
 namespace MixSample.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("/api/Books")]
     public class BooksController : ControllerBase
     {
         private IUnitOfWork _unitOfWork;

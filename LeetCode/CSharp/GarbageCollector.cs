@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -47,8 +48,12 @@ namespace LeetCode.CSharp
 
             // Perform another full garbage collection.
             // A WeakReference will not survive a garbage collection.
-            GC.Collect();
-
+            GC.Collect(0, GCCollectionMode.Default);
+            GC.WaitForPendingFinalizers();  // method is used to suspend the current thread until the thread that is processing the queue of finalizers has emptied that queu
+            GC.RegisterForFullGCNotification(10, 10); // Monitor for the completion of a full garbage collection
+            GC.WaitForFullGCComplete(); // allows you to wait for that full GC to finish
+           var t = GC.GetTotalMemory(false) / 1024.0 / 1000.0 ;// do  force full collection first ; just return the current estimate. 
+           
             // Try to get the generation of managed memory where wkref is stored.
             // Because it has been collected, an exception will be thrown.
             try
@@ -66,6 +71,10 @@ namespace LeetCode.CSharp
         void MakeSomeGarbage()
         {
             Version vt;
+
+            using (StreamWriter streamWriter = new StreamWriter("")) { 
+            
+            } 
 
             for (int i = 0; i < maxGarbage; i++)
             {

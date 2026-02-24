@@ -10,7 +10,7 @@ namespace LeetCode.CSharp
 
     // Abstract class are used to expose common functionalaltiy to out side cunsumer.
     /*
-     In below example bank one and back two are using same funcionality so in below case we can use abstract class
+     In below example bank one and bank two are using same funcionality so in below case we can use abstract class
     
      */
 
@@ -18,12 +18,11 @@ namespace LeetCode.CSharp
      Now if bank two wants Inssurance funinonality then we need to use interface
      */
 
-
     internal abstract class  AbstractSample
     {
         public AbstractSample() { }
 
-
+        
         public abstract void Credit();
         public abstract void Debit();
         public abstract void Saving();
@@ -40,6 +39,8 @@ namespace LeetCode.CSharp
         public void CalculateIInsurance();
       //  public void CalculateTotalSum();
 
+       
+       
 
     }
 

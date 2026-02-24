@@ -20,6 +20,8 @@ namespace LeetCode.CSharp
 
 
         public static int p = 10;
+        string name {  get; set; }
+        string lastName {  get; set; }
        public ConstructorType() {
             Console.WriteLine("A");
         }
@@ -27,10 +29,38 @@ namespace LeetCode.CSharp
             Console.WriteLine("Static A");
         }
 
+       
+        public ConstructorType(string name , string lastName)
+        {
+            name = name;
+            lastName = lastName;
+        }
+
+
+        // Copy Constructor takes the instace of it class object as input parameter.copy constructor which creates the new object by copyinh value from exsting object as input parameter
+        public ConstructorType(ConstructorType constructorType)
+        {
+            name = constructorType.name;
+            lastName = constructorType.lastName;
+        }
+
+
+        ~ConstructorType()  // Finalizers
+        {
+            //Finalizers cannot be defined in structs.They are only used with classes.
+            //A class can only have one finalizer.
+            //Finalizers cannot be inherited or overloaded.
+            //Finalizers cannot be called. They are invoked automatically.
+            //A finalizer does not take modifiers or have parameters.
+
+        }
+
         public void Method1()
         {
             Console.WriteLine("Method1");
         }
+
+       
     
     }
 

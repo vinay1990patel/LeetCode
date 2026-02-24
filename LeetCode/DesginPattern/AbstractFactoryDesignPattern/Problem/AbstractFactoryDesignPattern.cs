@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LeetCode.DesginPattern.AbstractFactoryDesignPattern
+namespace LeetCode.DesginPattern.AbstractFactoryDesignPattern.Problem
 {
     /*
 

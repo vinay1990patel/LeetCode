@@ -1,0 +1,33 @@
+1.  reverse proxy
+System Design Questions Interviewers Actually Ask:
+
+1. Design a URL Shortener (like Bitly)
+2. Design WhatsApp / Chat Application
+3. Design Instagram Feed
+4. Design a Scalable Notification System
+5. Design an Online Food Delivery System
+6. Design a File Storage System (like Google Drive)
+7. Design a Rate Limiter
+8. Design a Caching System
+9. Design an API Gateway
+10. Design an Authentication System (Login + JWT)
+11. How would you design a Load Balancer?
+12. How do you handle millions of concurrent users?
+13. How do you scale read-heavy systems?
+14. How do you scale write-heavy systems?
+15. How would you design database sharding?
+16. How do you ensure data consistency?
+17. How would you handle failures in distributed systems?
+18. When to use SQL vs NoSQL?
+19. How does CDN improve performance?
+20. How would you design logging & monitoring?
+21. How do you design idempotent APIs?
+22. How do you handle retries without duplication?
+23. How would you design search functionality?
+24. How do you handle real-time updates?
+25. How would you design message queues?
+26. How do you handle traffic spikes?
+27. How do you secure a large-scale system?
+28. How do you version APIs?
+29. How do you handle backward compatibility?
+30. How would you design for high availability?

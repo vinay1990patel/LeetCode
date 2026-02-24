@@ -4,6 +4,7 @@ using LeetCode.CSharp;
 using LeetCode.DesginPattern;
 
 using LeetCode.LeetCode;
+using LeetCode.LeetCode2025;
 using Microsoft.Data.SqlClient;
 using System.Data;
 
@@ -184,7 +185,7 @@ ReverseStringAndInteger.ReverseWord();
 //testGenric<string>.equals("", "");
 
 
-int[] input1 = { 1, 2, 3, 4, 3, 4, 3, 4, 3, 5, 7, 8, 9 };
+//int[] input1 = { 1, 2, 3, 4, 3, 4, 3, 4, 3, 5, 7, 8, 9 };
 
 //HasSetDemo.findDulticateInArray(input1);
 
@@ -259,9 +260,9 @@ int[] input1 = { 1, 2, 3, 4, 3, 4, 3, 4, 3, 5, 7, 8, 9 };
 //ObjectCamparision.Compare();
 
 //Console.WriteLine("***************************** Garbage Collector ***********************************");
-//// GarbageCollector.GetGarbageCollectionMethod();
+ GarbageCollector.GetGarbageCollectionMethod();
 
-//Console.WriteLine("***************************** Object Camparison ***********************************");
+Console.WriteLine("***************************** Object Camparison ***********************************");
 //EqualsOps.EqualityOpaerator();
 
 
@@ -280,5 +281,54 @@ int[] input1 = { 1, 2, 3, 4, 3, 4, 3, 4, 3, 5, 7, 8, 9 };
 // DupicateInIntegerOrStringAndCount.DuplicateCharInString();
 
 
+/**  2025 **/
+
+//int[] array = { 65, 1, 2, 4, 9, 11, 21, 45 };
+//LargestAndSmallestNumberInArray.LargestNumberInArrayM(array);
+//LargestAndSmallestNumberInArray.SecondlargestNumber(array);
+
+int[] array = { 1,2,3,4,5,6,-6 };
+//int k = 6;
+//SubArrayAndSubArraySum.PrintAllSubArray(array);
+//Console.WriteLine("**********************************************");
+//SubArrayAndSubArraySum.SubArraySumM(array, 15);
+//SubArrayAndSubArraySum.SubArraySum(array);
+//SubArrayAndSubArraySum.SubArraySumOptamized(array);
+//SubArrayAndSubArraySum.PrefixArraySumInSameArray(array);
+//SubArrayAndSubArraySum.MaxSubArraySum(array);
+//SubArrayAndSubArraySum.MaxSubArraySumUsinPrefixSum(array);
+//SubArrayAndSubArraySum.TotalOfAllPossibleSubArray(array);
+//SubArrayAndSubArraySum.MaxSubArraySumOfGivenLenghtRang_SlindingWindow(array);
+
+// ****************************** 2D Array *********************************
+
+int[,] MatrixInput = { 
+                       { 1, 2, 3 },
+                       { 5, 6, 7},
+                       { 9, 10, 11}
+                       
+                     };
+
+
+//_2DMatrixRowWiseSum.RowWiseSomeOfMatrix(MatrixInput);
+//_2DMatrixRowWiseSum.ColWiseSomeOfMatrix(MatrixInput);
+//_2DMatrixRowWiseSum.PrintTheDiagonalElementFromLeftToRight(MatrixInput);
+//_2DMatrixRowWiseSum.PrintTheDiagonalElementFromLeftToRight(MatrixInput);
+//_2DMatrixRowWiseSum.PrintAllAntiDiagonalNon_SqureMatrix(MatrixInput);
+//_2DMatrixRowWiseSum.FindTheTransposeOfMatrix(MatrixInput);
+
+//string inputString = "ViNaY PaTeL";
+
+//SubStringOfString.CharToggleInStringMethod(inputString);
+//SubStringOfString.SubStringOfStringMethod("vinay");
+//SubStringOfString.PalimDromeString("VINIV");
+//SubStringOfString.LargestSuStringPalimdrome("abacab");
+
+
+//int[] inputArray =  {-3, 0,2,5 };
+//ArrayAndSorting.NobelElementBruteForce(inputArray);
+
+// WebClient.GetUsingHttpClient();
+//WebClient.GetUsingRestClinetAsync();
 
 Console.ReadLine();

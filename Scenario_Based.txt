@@ -1,0 +1,35 @@
+* Memory Management better practice *
+1. Use Streaming instead of buffering : Caller can consume resource incremently no large in-memory buffer files are cretaed.
+  
+     Stream :: stream is a sequence that transfers information from or to a specified source
+     
+     FileStream stream = new FileStream("filepath.txt", FileMode.OpenOrCreate);
+     
+     Opens a stream to a file. That stream can be read from, written to, or both. As it doesn't require any additional memory, 
+     it's lightweight and fast
+
+     Buffer :: buffer is a sequence of bytes that is stored in memory. Reads all the bytes of a file into memory. 
+               This is handy for when you need to manipulate the entire file at once
+
+     byte[] fileContents = File.ReadAllBytes("filepath.txt");
+
+2. No Tracking :: No-tracking queries are useful when the results are used in a read-only scenario. 
+                  They're generally quicker to execute because there's no need to set up the change tracking information.
+               :: Read-only scenarios: If you are retrieving data solely for display or reporting purposes and do not intend to modify and persist those changes back to the database, AsNoTracking() is ideal.
+     
+                   // This query will retrieve BlogPosts, but EF Core will not track them for changes.
+                   var blogPosts = context.BlogPosts
+                           .AsNoTracking()
+                           .Where(b => b.IsPublished)
+                           .ToList();
+
+                :: Entities retrieved with AsNoTracking are considered detached. if you need to attach them for update later.
+                   you need to attach them
+                    context.BlogPosts.AttachRange(blogPosts);
+                    context.SavveChanges.
+
+3. Avoid Casting to IQuerable ex.(list.Cast<TDataRecord>().AsQuerable()) means data is fully loaded in memory for large result set it increase memory.
+   streaming via IEnumeration better when possible.
+
+4. Use Bulk copy for large dataset  using batchSize.
+

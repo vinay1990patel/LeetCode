@@ -1,0 +1,27 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/WeatherForecast",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "WeatherForecastService",
+          "Port": 5200
+        }
+      ],
+      "UpstreamPathTemplate": "/api/employee",
+      "UpstreamHttpMethod": [ "Get" ]
+    }
+  ],
+  "AuthenticationOptions": {
+    "AuthenticationProviderKey": "IdentityServer",
+    "AllowedScopes": [ "read", "write" ]
+  },
+  "RateLimitOptions": {
+    "ClientWhitelist": [],
+    "EnableRateLimiting": true,
+    "Period": "1s",
+    "PeriodTimespan": 1,
+    "Limit": 1
+  }
+}
