@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace LeetCode.CSharp
 {
 
-    // To Dispose implecetly use using block and it is used for unmanged Code . to call it explicilty call should be inherited from IDisposible interface
+    // To Dispose implicetly use using block and it is used for unmanged Code . to call it explicilty call should be inherited from IDisposible interface
 
 
     class MyObject : IDisposable
@@ -40,7 +40,7 @@ namespace LeetCode.CSharp
 
             //Now we have disposed of all our resources, the GC does not
             //no need to do anything, stop the finalizer being called
-            GC.SuppressFinalize(this);
+            GC.SuppressFinalize(this); // this is only needed when finalizer is present. because it prevent finalizer to running.
         }
 
         private void Dispose(bool disposing)

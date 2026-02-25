@@ -1,0 +1,11 @@
+﻿1. Diffrence between factory and abstract factory.
+2. How do you use and what problem it solved.
+
+
+
+
+Factory Method : Factory Method is a method-level pattern where a superclass defines the interface for creating an object,
+                 but subclasses decide which class to instantiate.
+
+Abstract Factory :Abstract Factory is a class-level pattern that provides an interface for creating families of related or dependent objects without specifying their concrete classes
+

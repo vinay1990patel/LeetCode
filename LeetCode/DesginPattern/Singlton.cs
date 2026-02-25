@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace LeetCode.DesginPattern
 {
-    internal sealed   class Singlton
+    internal sealed class DBConnection
     {
-        private static Singlton Instance = null;
+        private static DBConnection Instance = null;
 
         private static readonly object lockObject = new object();
-        private Singlton() { }
-        public static Singlton getInstance
+        private DBConnection() { }
+        public static DBConnection getDBConnection
         {
             get
             {
@@ -21,12 +21,31 @@ namespace LeetCode.DesginPattern
 
                     if (Instance == null)
                     {
-                        Instance = new Singlton();
+                        Instance = new DBConnection();
                     }
 
                     return Instance;
                 }
             }
         }
+    
+
+   
+    }
+
+
+    public class ClientDB
+    {
+        public void GetData()
+        {
+          var DBInstance =  DBConnection.getDBConnection;
+        }
     }
 }
+
+/*
+ ex. 1. Db Connecton
+     2. Logger
+     3. Threadpool
+     4. Confihuration Object (Configuraton Object)
+ */

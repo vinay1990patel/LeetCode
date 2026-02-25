@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using MixSample.Model;
 using MixSample.Repository;
 using MixSample.Repository.Services;
@@ -10,8 +11,8 @@ namespace MixSample.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-
-    [Authorize]
+    [EnableRateLimiting("fixed")]
+    //  [Authorize]
     public class EmployeeController : ControllerBase
     {
 
@@ -21,6 +22,7 @@ namespace MixSample.Controllers
         }
         // GET: api/<EmployeeController>
         [HttpGet]
+       
         public ActionResult < IQueryable<Employee>> Get()
         {
 
@@ -31,6 +33,7 @@ namespace MixSample.Controllers
 
         // GET api/<EmployeeController>/5
         [HttpGet("{id}")]
+        
         public string Get(int id)
         {
             return "value";

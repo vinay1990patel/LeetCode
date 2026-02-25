@@ -20,4 +20,12 @@
                                    - In factory method is also responsible for instatinating the object but instatination of object logic will be delegated to subclass inheriting the factory.
 
 
+* Creation Design Pattern : focus on Object creation mechanisms, making systems flexible and reusable
+                        ex: Singleton, Factory Method, Abstract Factory, Builder, Prototype.
+
+* Structural Design Pattern :Focus on Assembling classes and objects into larger structures, simplifying relationships
+                          ex: Adapter, Bridge, Composite, Decorator, Facade, Flyweight, Proxy. 
+
+* Behavioral Design Pattern : focus on managing communication between objects.
+                          ex: Chain of Responsibility, Command, Iterator, Mediator, Memento, Observer, State, Strategy, Template Method, Visitor. 
 

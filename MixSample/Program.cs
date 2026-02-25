@@ -1,22 +1,26 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using MixSample;
 using MixSample.CustomMiddleWare;
 using MixSample.DbContextLayer;
 using MixSample.Model;
 using MixSample.Repository;
 using MixSample.Repository.Interface;
 using MixSample.Repository.Services;
-using Newtonsoft.Json;
-using System.Security.Cryptography.Xml;
+using Ocelot.DependencyInjection;
+using Ocelot.Middleware;
+using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using System.Text;
-using System.Text.Json.Serialization;
-using Unity.Injection;
+using System.Threading.RateLimiting;
+
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -47,8 +51,8 @@ builder.Services.AddAuthentication(options =>
 })
     .AddJwtBearer(option =>
     {
-    option.SaveToken = true;
-    option.RequireHttpsMetadata = false;
+        option.SaveToken = true;
+        option.RequireHttpsMetadata = false;
         option.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
         {
             ValidateIssuer = true,
@@ -57,28 +61,17 @@ builder.Services.AddAuthentication(options =>
             ValidIssuer = configuration["jwt:ValidIssure"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["jwt:Secret"]))
         };
-});
+    });
 
 
-
-//builder.Services.AddMvc();    // used  for MVC 
-
-//builder.Services.AddMvc().AddJsonOptions(opt =>
-//    opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 builder.Services.AddTransient<CustomeMiddleWare>();
 builder.Services.AddSingleton<IWeatherForecast, WeatherForecastServices>();
+builder.Services.AddScoped<IBook, BookService>();
 builder.Services.AddTransient<IEmployee, EmployeeService>();    //   
-//builder.Services.AddSingleton<IUnitOfWork, UnitOfWork>(); 
-builder.Services.AddTransient<IAccountRepository, AccountRepository>();
-
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+//builder.Services.AddTransient<IAccountRepository, AccountRepository>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-// Singlton = > There will be only one instance of singlton service thorught out the application. once you start application old instanc will distory and new singlton instance will be creatded.
-// Scope    => The new instance of service will created for new http Request.
-// Transient => A new instance of service will be created every time it is requested.
-// TryAddSingleton => Adds the specified service as a Singleton service to the collection if the service type hasn't already been registered.
 
-
-// [FormService]  =  use it for action level service dependency injection.
 
 builder.Services.AddAutoMapper(typeof(Program));
 
@@ -88,141 +81,139 @@ builder.Services.AddCors(option =>
 {
     option.AddDefaultPolicy(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 });
+
 builder.Services.AddAuthentication();
 builder.Services.AddAuthentication();
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+builder.Services.AddOcelot(builder.Configuration);
+builder.Services.AddRateLimiter(rateLimiterOptions =>
+{
+
+    rateLimiterOptions.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+    // Rate Limit by IP
+    rateLimiterOptions.AddPolicy("FixedUsingIP", httpcontext =>
+      RateLimitPartition.GetFixedWindowLimiter(
+           partitionKey: httpcontext.Connection.RemoteIpAddress.ToString(),
+           factory: _ => new FixedWindowRateLimiterOptions
+           {
+               AutoReplenishment = true,
+               PermitLimit = 3,
+               QueueLimit = 3,
+               QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+               Window = TimeSpan.FromSeconds(5)
+           }
+          )
+       );
+
+    // Rate Limit by User
+    rateLimiterOptions.AddPolicy("FixedUsingUser", httpcontext =>
+         RateLimitPartition.GetFixedWindowLimiter(
+              partitionKey: httpcontext.User.Identity?.Name.ToString(),
+              factory: _ => new FixedWindowRateLimiterOptions
+              {
+                  AutoReplenishment = true,
+                  PermitLimit = 3,
+                  QueueLimit = 3,
+                  QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                  Window = TimeSpan.FromSeconds(5)
+              }
+             )
+          );
+
+    // Global RateLimit
+    rateLimiterOptions.AddFixedWindowLimiter("fixed", options =>
+    {
+        options.Window = TimeSpan.FromSeconds(10);
+        options.PermitLimit = 3;
+        options.QueueLimit = 0;
+        options.QueueProcessingOrder = System.Threading.RateLimiting.QueueProcessingOrder.OldestFirst;
+        options.AutoReplenishment = true;
+
+    });
+    rateLimiterOptions.AddSlidingWindowLimiter("sliding", option =>
+    {
+         option.Window = TimeSpan.FromSeconds(15);
+         option.SegmentsPerWindow = 3;
+         option.PermitLimit = 15;
+         option.QueueLimit = 3;
+         option.QueueProcessingOrder = System.Threading.RateLimiting.QueueProcessingOrder.OldestFirst;
+         option.AutoReplenishment = true;
+    });
+    rateLimiterOptions.AddTokenBucketLimiter("token", option => {
+        option.TokenLimit = 5;
+        option.ReplenishmentPeriod = TimeSpan.FromSeconds(5);
+        option.AutoReplenishment = true;
+        option.QueueProcessingOrder = System.Threading.RateLimiting.QueueProcessingOrder.OldestFirst;
+        option.TokensPerPeriod = 10; 
+    });
+    rateLimiterOptions.AddConcurrencyLimiter("Concurrency", option => {
+        option.QueueLimit = 3;
+        option.PermitLimit = 3;
+        option.QueueProcessingOrder = System.Threading.RateLimiting.QueueProcessingOrder.OldestFirst;
+    });
+});
+
+
+builder.Services.AddOpenTelemetry()
+    .ConfigureResource(resource => resource.AddService("MixSample"))
+    .WithMetrics(metrics =>
+    {
+        metrics.AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation();
+        metrics.AddOtlpExporter();
+
+    })
+    .WithTracing(tracing =>
+    {
+        tracing.AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation();
+       
+        tracing.AddOtlpExporter();
+    });
+
+builder.Logging.AddOpenTelemetry(logging => {
+    logging.AddOtlpExporter();
+});
+
 // just for github
 var app = builder.Build();
 
-
-
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseDeveloperExceptionPage();
-//    app.UseSwagger();
-//    app.UseSwaggerUI(options =>
-//    {
-//        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-//        options.RoutePrefix = string.Empty;
-
-//    });
-//    // app.UseHsts();
-//}
-
-//app.UseSwagger();
-//app.UseSwaggerUI(options =>
-//{
-//    options.SwaggerEndpoint("/swagger/v1/swagger.json","v1");
-//    options.RoutePrefix = string.Empty;
-
-//});
-
-//app.Use(async (context, next) =>
-//{
-//    await context.Response.WriteAsync("use 1 1 \n");
-
-//    await next();
-
-//    await context.Response.WriteAsync("use 1 2 \n");
-
-//});
-
-
-app.UseMiddleware<CustomeMiddleWare>();
-app.Map("/custom", customCode);
-
-
-//app.Use(async (context, next) =>
-//{
-//    await context.Response.WriteAsync("use 2 1 \n");
-
-//    await next();
-
-//    await context.Response.WriteAsync("use 2 2 \n");
-
-//});
-
-
-
-//app.Run(async context =>
-//{
-//    await context.Response.WriteAsync("run 1 \n");
-//});
-
-
-
-
-//app.Run(async context =>
-//{
-//    await context.Response.WriteAsync("run 2 \n");
-//});
-
-
-
-app.UseAuthentication();
-
-// Configure the HTTP request pipeline.
-
-app.UseRouting();  // Default routing 
-
-app.UseAuthentication();
-
-// Request pipe line can have multiple middleware    1. Custom middleware 2 . prebuild middleware
-
-app.UseCors();
-app.MapGet("time/utc", () => Results.Ok(DateTime.Now));
-
-// app.UseHttpsRedirection();
-
-//app.UseAuthorization();
-
-
-app.UseAuthentication();
-
-// Configure the HTTP request pipeline.
-
-app.UseRouting();  // Default routing 
-
-app.UseAuthentication();
-
-app.UseEndpoints(endpoints =>      // customised services
+using (var scope = app.Services.CreateScope())
 {
+    var services = scope.ServiceProvider;
+    var db = services.GetRequiredService<MixedDbContext>();
+    // Option A: apply pending migrations (recommended for production-like migrations)
+    db.Database.Migrate();
 
-    endpoints.MapControllers();
+    // Option B: ensure database created (simple, no migrations, good for quick local/dev)
+    // db.Database.EnsureCreated();
+}
 
+// Global middleware ordering
+app.UseCors();
+app.UseRouting();
+app.UseRateLimiter();
+app.UseAuthentication();
+app.UseAuthorization();
 
+// Map controller endpoints so controllers are discoverable by ApiExplorer/Swashbuckle
+app.MapControllers();
 
+//Serve swagger UI in development
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
-    //endpoints.MapGet("/", async context =>
-    //{
-    //    await context.Response.WriteAsync("Web Api is running in Default Url");
-
-    //});
-
-    //endpoints.MapGet("/test", async context =>
-    //{
-    //    await context.Response.WriteAsync("Web Api is running in test url");
-    //});
-});
-
-// Run() is  use to complete the execution of middleware 
-// Use() is use to insert a middleware in the pipeline
-// Next() method is use to pass the execution from one middleware to another middleware  . if there are 6 middleware in a pipeline if next is not present 4th pipeline so the request will come back from 4th middlewares
-// Map() is use to map the middleware to a specific Url.
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+// Ocelot must be last so it doesn't preempt internal routes like /swagger or /api/*
+// await app.UseOcelot();
 
 app.Run();
-void customCode(IApplicationBuilder app)
-{
-    app.Use(async (context, next) =>
-    {
-        await context.Response.WriteAsync("custom middle ware /n");
-        await next();
-    });
-}
+
 
 
 

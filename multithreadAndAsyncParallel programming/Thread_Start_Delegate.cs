@@ -13,10 +13,10 @@ namespace multithreadAndAsyncParallel_programming
         // 
         public static void Main()
         {
-          ThreadStart obj = new ThreadStart(new ParameterizedThreadStart(method(int q)));
+          //ThreadStart obj = new ThreadStart(new ParameterizedThreadStart(method()));
 
-            Thread thread = new Thread(new ParameterizedThreadStart(method));
-            thread.Start(10);
+          //  Thread thread = new Thread(new ParameterizedThreadStart(method));
+          //  thread.Start(10);
         }
 
       

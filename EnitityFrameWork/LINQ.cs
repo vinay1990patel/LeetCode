@@ -60,22 +60,21 @@ namespace EnitityFrameWork
 
        
 
-        public static void NthSalary()
+        public static void NthSalary(int nth)
         {
             List<int> ints= new List<int>() { 1,2,3,4,5,6,7};
 
-            var result = ints.OrderByDescending(x =>x).Skip(2).Take(1).ToList();
+            var result = ints.OrderByDescending(x =>x).Skip(nth-1).Take(1).ToList();
             Console.WriteLine(result[0]);
         }
 
         public static void LinqForStringIndex() {
-            int[] numbers = { 3, 4, 5, 6, 8, 1, 2, 3, 7 };
-            string[] strings = { "one", "two", "three", "four", "five", "six", "seven" };
-            var result = from n in numbers
-                         select strings[n];
+            int[] numbers = { 3, 4, 5, 6, 8, 1, 2, 3, 7,0 };
+            string[] strings = { "Zero","one", "two", "three", "four", "five", "six", "seven","eight" };
+           
             foreach (var item in numbers)
             {
-                Console.WriteLine(result);
+                Console.WriteLine(strings[item]);
             }
         
            }

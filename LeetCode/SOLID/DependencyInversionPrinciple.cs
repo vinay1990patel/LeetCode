@@ -9,6 +9,12 @@ namespace LeetCode.SOLID
     internal class DependencyInversionPrinciple
     {
 
+
+        // Reference : https://dev.to/extinctsion/implement-rate-limiting-in-aspnet-core-net9-2725
+
+        /*
+          No two concreate class should be dependent each other directly, instead they should dependent via interface
+         */
         /* 1. high-level modules/classes should not depend on low-level modules/classes. Both should depend upon abstractions, 
          * 2. abstractions should not depend upon details. Details should depend upon abstractions. */
         private Desktop desktop;
@@ -16,12 +22,12 @@ namespace LeetCode.SOLID
 
         public DependencyInversionPrinciple()    
         {
-            this.desktop = new Desktop();   //DependencyInversionPrinciple class depenednt on lower level class 
-            this.QwertyKeyPad = new QwertyKeyPad();  // both are tightly coupled in every initilaization of DependencyInversionPrinciple Desktop and QwertyKeyPad will be call or bind
+            this.desktop = new Desktop();   //DependencyInversionPrinciple class dependent on lower level class 
+            this.QwertyKeyPad = new QwertyKeyPad();  // both are tightly coupled in every initialization of DependencyInversionPrinciple Desktop and QwertyKeyPad will be call or bind
         }
 
 
-        /* To Avoid above tight coupling le the user pass in parameterised constructor */
+        /* To Avoid above tight coupling  the user pass in parameterized constructor */
 
 
         public DependencyInversionPrinciple (Desktop desktop, QwertyKeyPad qwertyKeyPad)
@@ -43,13 +49,16 @@ namespace LeetCode.SOLID
     }
 
 
-   // Example 2 
+    // Example 2 
 
+    /*
+         No two concreate class should be dependent each other directly, instead they should dependent via interface
+    */
 
     public class DataAccessLayer
     {
         IFlieLogger _logger;
-        public DataAccessLayer( IFlieLogger flieLogger)  //5.  it will be loosly cuopled now
+        public DataAccessLayer( IFlieLogger flieLogger)  //5.  it will be looslly coupled now
         {
             _logger = flieLogger;
         }
@@ -57,7 +66,7 @@ namespace LeetCode.SOLID
 
         public void AddCustomer()       
         {
-          FileLoggerClass fileLoggerClass = new FileLoggerClass();   //1. Here Data AccessLayer (high level class is depened on low level class (FileLogerclass))
+          FileLoggerClass fileLoggerClass = new FileLoggerClass();   //1. Here Data AccessLayer (high level class is dependent on low level class (FileLogerclass))
                                                                      //2. to resolve this create inteface and put logMethod inside it.
             fileLoggerClass.log();
 

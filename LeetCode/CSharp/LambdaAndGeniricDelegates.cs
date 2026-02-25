@@ -6,19 +6,25 @@ using System.Threading.Tasks;
 
 namespace LeetCode.CSharp
 {
-    internal class GeniricDelegates
+    internal class LambdaAndGeniricDelegates
     {
         public delegate double AddNumber1Delegate(int no1, float no2, double no3);
         public delegate void AddNumber2Delegate(int no1, float no2, double no3);
         public delegate bool CheckLengthDelegate(string name);
+
+    
+
+
         static void Main(string[] args)
         {
 
+
+
             // By using custom delegate
 
-            //AddNumber1Delegate obj1 = new AddNumber1Delegate(AddNumber1);
-            //double Result = obj1.Invoke(100, 125.45f, 456.789);
-            //Console.WriteLine(Result);
+            AddNumber1Delegate obj11 = new AddNumber1Delegate(AddNumber1);
+            double Result = obj11.Invoke(100, 125.45f, 456.789);
+            Console.WriteLine(Result);
 
             /******************* Func Delegate *********************************/
 
@@ -34,19 +40,20 @@ namespace LeetCode.CSharp
              
              */
 
+           
 
 
             Func<int, float, double,double> obj1 = new Func<int, float, double, double>(AddNumber1);
 
-            double result = obj1.Invoke(10, 10.0f, 102.4);
+             double result = obj1.Invoke(10, 10.0f, 102.4);
 
-            Console.WriteLine(result);
-
-
+             Console.WriteLine(result);
 
 
 
-            /****************** Action ****************************/
+
+
+             /****************** Action ****************************/
 
 
             /*
@@ -84,7 +91,7 @@ namespace LeetCode.CSharp
             
            
             Console.ReadKey();
-        }
+        } //
         public static double AddNumber1(int no1, float no2, double no3)
         {
             return no1 + no2 + no3;
