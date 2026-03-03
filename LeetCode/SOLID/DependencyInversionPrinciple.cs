@@ -66,7 +66,7 @@ namespace LeetCode.SOLID
 
         public void AddCustomer()       
         {
-          FileLoggerClass fileLoggerClass = new FileLoggerClass();   //1. Here Data AccessLayer (high level class is dependent on low level class (FileLogerclass))
+          FileLoggerClass fileLoggerClass = new FileLoggerClass();   //1. Here Data AccessLayer (high level class is dependent on low level class (FileLoggerClass))
                                                                      //2. to resolve this create inteface and put logMethod inside it.
             fileLoggerClass.log();
 

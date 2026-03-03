@@ -47,6 +47,7 @@ namespace LeetCode.CSharp
             eventProgram eventProgram1 = new eventProgram();
             eventProgram1.processCompleted += eventProgram.eventHandler;
             eventProgram1.startProcess();
+            eventProgram1.stopProcess();
         }
 
     }
