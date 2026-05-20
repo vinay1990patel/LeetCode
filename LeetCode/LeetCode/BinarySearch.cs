@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LeetCode.LeetCode
 {
-    internal class BinarySearch
+    public class BinarySearch
     {
 
         public static int BinarySearch1(int[] nums, int target)
