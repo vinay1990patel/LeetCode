@@ -31,3 +31,38 @@ System Design Questions Interviewers Actually Ask:
 28. How do you version APIs?
 29. How do you handle backward compatibility?
 30. How would you design for high availability?
+
+
+
+
+OrderId CustomerId Ammount
+1        101        300
+2        101        500
+3        102        200
+4        101        400
+5        103        100
+6        103        400
+
+select customerId whose order is >2
+  
+  
+  
+  
+ List<int> input = {1,2,4,6,8}  //  0 -1 -4 -2  ==
+ 
+   int max = input[0];   1< 2  6
+   int secod =int.MinValue;
+   for(int i =1; i<input.Length; i++ ){  0 !< -1,max=0< -4, 0 <-2
+        
+	  if(max < input[i]){
+	     max = input[i];
+	  }
+	  
+     print (MAX);
+	 print(second);
+   }
+ 
+
+0 -1 -4 -2
+
+

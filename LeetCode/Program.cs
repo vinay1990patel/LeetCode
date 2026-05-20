@@ -260,7 +260,7 @@ ReverseStringAndInteger.ReverseWord();
 //ObjectCamparision.Compare();
 
 //Console.WriteLine("***************************** Garbage Collector ***********************************");
- GarbageCollector.GetGarbageCollectionMethod();
+ //GarbageCollector.GetGarbageCollectionMethod();
 
 Console.WriteLine("***************************** Object Camparison ***********************************");
 //EqualsOps.EqualityOpaerator();
@@ -330,5 +330,8 @@ int[,] MatrixInput = {
 
 // WebClient.GetUsingHttpClient();
 //WebClient.GetUsingRestClinetAsync();
+
+eventClient eventClient = new eventClient();
+eventClient.Main();
 
 Console.ReadLine();

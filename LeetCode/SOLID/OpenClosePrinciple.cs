@@ -14,7 +14,7 @@ namespace LeetCode.SOLID
     public class OpenClosePrinciple
     {
         /* software entities such as modules, classes, functions, etc.
-         * should be open for extension, but closed for modification. */
+           should be open for extension, but closed for modification. */
 
         public int GenrateReport( string ReportType)
         {
@@ -67,7 +67,7 @@ namespace LeetCode.SOLID
 
     /*  Example:: 2
 
-       now if we want to add another method to this interface we need to implement that method in the class becuase of that consumer of this interface will be distrubed.
+       now if we want to add another method to this interface we need to implement that method in the class becaus of that consumer of this interface will be distributed.
        to avoid that we can extend this interface and use it.
      */
 

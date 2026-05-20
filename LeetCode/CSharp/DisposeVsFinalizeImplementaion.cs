@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace LeetCode.CSharp
 {
 
-    // To Dispose implicetly use using block and it is used for unmanged Code . to call it explicilty call should be inherited from IDisposible interface
+    // To Dispose implicitly use using block and it is used for unmanged Code . to call it explicilty call should be inherited from IDisposible interface
 
 
     class MyObject : IDisposable

@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace DesignPattern.CreationalDesignPattern.singleton.Solution
 {
-    internal class singletonClient
+    internal sealed class singletonClient
     {
 
         public static void clientMethod()
         {
             AppSetting appSetting = AppSetting.GetAppSettingInstance();
             AppSetting appSettingCopy = AppSetting.GetAppSettingInstance();
-
+            appSetting.GetDbUrl();
             Console.WriteLine(appSetting == appSettingCopy);
           
         }
