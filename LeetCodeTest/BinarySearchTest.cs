@@ -7,41 +7,42 @@ using System.Threading.Tasks;
 using LeetCode.LeetCode;
 namespace LeetCodeTest
 {
-   public class BinarySearchTest
+    [TestClass]
+    public class BinarySearchTest
     {
-
-        [Theory]
-        [InlineData(new int[] {1,2,3,4,5,7}, 4, 3)]
-      //  [InlineData(new[] {9,8,7,6,5,4},7 , 2)]
-      public void BinarySearchTestMethod(int[] inputs , int target, int expetctedResult)
+        // Use DynamicData so we can pass an int[] as a parameter
+        [DataTestMethod]
+        [DynamicData(nameof(InlineTestData), DynamicDataSourceType.Property)]
+        public void BinarySearchTestMethod(int[] inputs, int target, int expectedResult)
         {
-            
             var result = BinarySearch.BinarySearch1(inputs, target);
-
-            Assert.Equal(expetctedResult, result);
-        }
-        [Theory(Skip ="Skip this test")]
-        [MemberData(nameof(BinarySearchTest.BinarySearchTestData), MemberType =typeof(BinarySearchTest))]
-        public void BinarySearchTestMethodWithMemberData(int[] inputs, int target, int expetctedResult)
-        {
-
-            var result = BinarySearch.BinarySearch1(inputs, target);
-
-            Assert.Equal(expetctedResult, result);
+            Assert.AreEqual(expectedResult, result);
         }
 
+        // Skipped data-driven test (equivalent of xUnit [Theory(Skip=...)])
+        [Ignore("Skip this test")]
+        [DataTestMethod]
+        [DynamicData(nameof(BinarySearchTestData), DynamicDataSourceType.Property)]
+        public void BinarySearchTestMethodWithMemberData(int[] inputs, int target, int expectedResult)
+        {
+            var result = BinarySearch.BinarySearch1(inputs, target);
+            Assert.AreEqual(expectedResult, result);
+        }
 
-
-        public static TheoryData<object[],int, int> BinarySearchTestData =>
-            new TheoryData<object[], int, int>()
+        // Single inline dataset
+        public static IEnumerable<object[]> InlineTestData =>
+            new List<object[]>
             {
-                { new object[]{1,2,3,4},1,0 },
-                 { new object[]{2,3,4,5},5,3 },
-                  
-
-
+                    new object[] { new int[] { 1, 2, 3, 4, 5, 7 }, 4, 3 },
+                // add more cases here if needed
             };
-       
 
+        // Member-style dataset used by the second test
+        public static IEnumerable<object[]> BinarySearchTestData =>
+            new List<object[]>
+            {
+                    new object[] { new int[] { 1, 2, 3, 4 }, 1, 0 },
+                    new object[] { new int[] { 2, 3, 4, 5 }, 5, 3 },
+            };
     }
 }
