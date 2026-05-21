@@ -25,7 +25,7 @@ using System.Threading.RateLimiting;
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
 
-// Add services to the container.
+// Add services to the containe
 
 // MixedDbContext
 
