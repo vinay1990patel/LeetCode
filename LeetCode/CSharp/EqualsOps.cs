@@ -14,7 +14,7 @@ namespace LeetCode.CSharp
             employeeData.FistName = "vinay";
             employeeData.lastName = "patel";
 
-            EmployeeData employeeData11 = employeeData; // for reference type if it is poiting to same object the value will same then result will also same.
+            EmployeeData employeeData11 = employeeData; // for reference type if it is pointing to same object the value will same then result will also same.
 
 
 

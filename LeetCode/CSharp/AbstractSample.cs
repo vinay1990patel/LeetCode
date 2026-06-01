@@ -8,9 +8,9 @@ namespace LeetCode.CSharp
 {
 
 
-    // Abstract class are used to expose common functionalaltiy to out side cunsumer.
+    // Abstract class are used to expose common Functionality to out side Consumer.
     /*
-     In below example bank one and bank two are using same funcionality so in below case we can use abstract class
+     In below example bank one and bank two are using same Functionality so in below case we can use abstract class
     
      */
 

@@ -20,10 +20,12 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using System.Text;
 using System.Threading.RateLimiting;
-
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 var builder = WebApplication.CreateBuilder(args);
-ConfigurationManager configuration = builder.Configuration;
+
 
 // Add services to the containe
 
@@ -57,9 +59,9 @@ builder.Services.AddAuthentication(options =>
         {
             ValidateIssuer = true,
             ValidateAudience = true,
-            ValidAudience = configuration["jwt:Validaudience"],
-            ValidIssuer = configuration["jwt:ValidIssure"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["jwt:Secret"]))
+            ValidAudience = builder.Configuration["jwt:ValidAudience"],
+            ValidIssuer = builder.Configuration["jwt:ValidIssuer"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["jwt:Secret"]))
         };
     });
 
@@ -178,6 +180,14 @@ builder.Logging.AddOpenTelemetry(logging => {
     logging.AddOtlpExporter();
 });
 
+builder.Services.AddApiVersioning(options =>
+{
+    options.AssumeDefaultVersionWhenUnspecified = true;
+   
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.ReportApiVersions = true;
+    options.ApiVersionReader = new HeaderApiVersionReader("X-Api-Version");
+});
 // just for github
 var app = builder.Build();
 
@@ -213,6 +223,24 @@ if (app.Environment.IsDevelopment())
 // await app.UseOcelot();
 
 app.Run();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

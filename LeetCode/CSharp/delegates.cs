@@ -56,8 +56,8 @@ namespace LeetCode.CSharp
             DL2 = new MulticastDelegates(delegates.Div);
 
 
-            // Ananmous Delegates
-            /* Delegates poiting to a method without name of method is callled ananymous delegates*/
+            // Anonymous Delegates
+            /* Delegates pointing to a method without name of method is called anonymous delegates*/
 
             HelloDelegate ananymous = delegate (int a, int b)
             {

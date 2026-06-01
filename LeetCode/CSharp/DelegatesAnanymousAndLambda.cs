@@ -21,9 +21,9 @@ namespace LeetCode.CSharp
        ShowNameDelegate nameDelegate = new ShowNameDelegate(ShowName); // using Delegate
 
 
-      ShowNameDelegate showNameDelegate = delegate (string name)  // Ananymous Function   // The anonymous methods are created using the delegate keyword and when we invoke the delegate, the anonymous method is going to be executed.
+      ShowNameDelegate showNameDelegate = delegate (string name)  // Anonymous Function   // The anonymous methods are created using the delegate keyword and when we invoke the delegate, the anonymous method is going to be executed.
       {
-            Console.WriteLine("Your name is by Ananymous Method :" + name);
+            Console.WriteLine("Your name is by Anonymous Method :" + name);
         };
 
         Action<string> showNameByLambda = (name) =>          // Lambda

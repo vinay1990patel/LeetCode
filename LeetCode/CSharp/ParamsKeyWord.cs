@@ -11,11 +11,11 @@ namespace LeetCode.CSharp
 
         public static void Main()
         {
-            int y = Sum(1, 2, 3, 4, 5,7);  //  we can pass any number of arguemnt.
+            int y = Sum(1, 2, 3, 4, 5,7);  //  we can pass any number of argument.
         }
 
 
-        // Params key words used as which can take any number of arguement as input.but it should be in last after non params parameter
+        // Params key words used as which can take any number of argument as input.but it should be in last after non params parameter
         public static int Sum( params int[] numbers )
         {
             int total = 0;

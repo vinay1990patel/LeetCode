@@ -20,7 +20,6 @@ namespace LeetCode.CSharp
         }
     }
 
-
     class PolymorphismDerivedClass : PolymorphismBaseClass
     {
         public  new  void method2()

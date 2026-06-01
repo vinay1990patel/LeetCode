@@ -1,4 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
+
+using Microsoft.AspNetCore.Builder;
+
 using DesignPattern.BehaviouralDesignPatterns.ObserverPattern;
 using DesignPattern.CreationalDesignPattern.AbstractFactory.Problem;
 using DesignPattern.CreationalDesignPattern.AbstractFactory.Solution;
@@ -72,4 +75,16 @@ Console.WriteLine($"************************ Observer  Design pattern **********
 Console.ResetColor();
 ObserverDesignPattern.main();
 
+Console.BackgroundColor = ConsoleColor.Magenta;
+Console.WriteLine($"************************Strategy  Design pattern ****************");
+Console.ResetColor();
+
+//var builder = WebApplication.CreateBuilder(args);
+
+
+
+ObserverDesignPattern.main();
+
+
 Console.WriteLine();
+Console.ReadLine();
